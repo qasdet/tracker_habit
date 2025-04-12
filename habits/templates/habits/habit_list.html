@@ -1,0 +1,61 @@
+{% extends 'habits/base.html' %}
+
+{% block title %}Мои привычки{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="h3">Мои привычки</h1>
+    </div>
+    <div class="col text-end">
+        <a href="{% url 'habit_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus"></i> Создать привычку
+        </a>
+    </div>
+</div>
+
+{% if habits %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for habit in habits %}
+        <div class="col">
+            <div class="card h-100 habit-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">{{ habit.name }}</h5>
+                        {% if habit.get_status %}
+                            <span class="badge bg-success">Выполнено</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Не выполнено</span>
+                        {% endif %}
+                    </div>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ habit.get_frequency_display }}</h6>
+                    <p class="card-text">{{ habit.description|truncatewords:30 }}</p>
+                    <form method="post" action="{% url 'habit_complete' habit.pk %}" class="mb-2">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success btn-sm" {% if habit.get_status %}disabled{% endif %}>
+                            {% if habit.get_status %}
+                                ✓ Выполнено сегодня
+                            {% else %}
+                                ✓ Отметить выполнение
+                            {% endif %}
+                        </button>
+                    </form>
+                    <div class="btn-group">
+                        <a href="{% url 'habit_detail' habit.pk %}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+                        <a href="{% url 'habit_edit' habit.pk %}" class="btn btn-outline-secondary btn-sm">Изменить</a>
+                        <a href="{% url 'habit_delete' habit.pk %}" class="btn btn-outline-danger btn-sm">Удалить</a>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    Начало: {{ habit.start_date }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        У вас пока нет привычек. <a href="{% url 'habit_create' %}" class="alert-link">Создайте первую привычку</a>!
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'habits/base.html' %}
+
+{% block title %}Удаление привычки{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h2 class="h4 mb-0">Удаление привычки</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead">Вы действительно хотите удалить привычку "{{ habit.name }}"?</p>
+                <p class="text-muted">Это действие нельзя будет отменить. Все записи о выполнении этой привычки также будут удалены.</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'habit_list' %}" class="btn btn-secondary me-md-2">Отмена</a>
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

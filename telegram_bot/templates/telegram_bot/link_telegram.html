@@ -1,0 +1,44 @@
+{% extends 'habits/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Привязка Telegram</h4>
+                </div>
+                <div class="card-body">
+                    {% if telegram_id %}
+                    <div class="alert alert-info">
+                        Ваш текущий Telegram ID: {{ telegram_id }}
+                    </div>
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="telegram_id" class="form-label">Введите ваш Telegram ID</label>
+                            <input type="text" class="form-control" id="telegram_id" name="telegram_id" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="notification_time" class="form-label">Время отправки уведомлений</label>
+                            <input type="time" class="form-control" id="notification_time" name="notification_time" value="09:00" required>
+                            <div class="form-text">
+                                Чтобы получить ваш Telegram ID:
+                                <ol>
+                                    <li>Откройте наш бот: @YourBotName</li>
+                                    <li>Отправьте команду /start</li>
+                                    <li>Скопируйте полученный ID</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Привязать Telegram</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
