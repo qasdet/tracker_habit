@@ -1,5 +1,5 @@
 # Telegram Bot settings
-TELEGRAM_BOT_TOKEN = '8153213615:AAFwoqq4W02cd7fdJPGFKi768D0nkBC6NEk'
+TELEGRAM_BOT_TOKEN = ''
 
 # Celery settings
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
